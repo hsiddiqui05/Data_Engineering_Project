@@ -1,22 +1,25 @@
-# Azure Data Engineering Project – AdventureWorks
+## Azure Data Engineering: Medallion Architecture Pipeline
+# Project Overview
+This project demonstrates an automated end-to-end ETL/ELT pipeline built on the Azure Cloud Platform. It ingests raw AdventureWorks data from a GitHub source, processes it through structured layers using PySpark, and serves it via Synapse Serverless SQL for business intelligence.
 
-## Project Overview
-This project demonstrates an end-to-end Azure Data Engineering pipeline using
-Azure Data Factory, Azure Data Lake Gen2, Azure Databricks, and SQL Serverless.
+## 🛠️ Tech Stack
+**Orchestration**: Azure Data Factory (ADF)
+**Storage: Azure**: Data Lake Storage (ADLS) Gen2
+**Computation**: Azure Databricks (PySpark)
+**Data Warehousing**: Azure Synapse Analytics (Serverless SQL Pools)
+**Architecture**: Medallion (Bronze, Silver, Gold)
+**Visualization**: Power BI (optional)
 
-The pipeline follows the Medallion Architecture:
-Bronze → Silver → Gold.
+## Project Workflow
 
-## Architecture
-- Source: AdventureWorks CSV files
-- Ingestion: Azure Data Factory
-- Storage: Azure Data Lake Gen2
-- Transformation: Azure Databricks (PySpark)
-- Serving Layer: Azure Synapse Serverless SQL
-- Visualization: Power BI (optional)
-
-## Architecture Diagram
-(attach image here)
+# Data Pipeline Architecture
+Ingestion (Bronze): Azure Data Factory triggers an HTTP-based ingestion to pull CSV files from a GitHub repository, landing them in their raw format in ADLS Gen2 (Bronze Layer).
+# Transformation (Silver): 
+Azure Databricks utilizes PySpark to clean data, handle schema enforcement, and convert raw CSVs into optimized Parquet files stored in the Silver Layer.
+# Serving (Gold): 
+Synapse Serverless SQL creates a semantic layer using SQL Views. These views reference the Parquet files via OPENROWSET, providing a cost-effective "Gold Layer" without moving data into a dedicated SQL pool.
+# Reporting(optional): 
+Power BI connects to the Synapse Gold views to deliver a comprehensive sales and inventory dashboard.
 
 ## Tools & Services Used
 - Azure Data Factory
@@ -26,20 +29,6 @@ Bronze → Silver → Gold.
 - PySpark
 - SQL
 - GitHub
-
-## Medallion Architecture
-### Bronze Layer
-- Raw CSV files ingested using ADF
-- No transformation
-
-### Silver Layer
-- Data cleaning and transformation using PySpark
-- Converted to Parquet
-- Stored in Silver container
-
-### Gold Layer
-- SQL views created using OPENROWSET
-- Optimized for analytics and reporting
 
 ## Key Transformations
 - Date parsing and type casting
